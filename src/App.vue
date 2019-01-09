@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <Game msg="AMELIA"/>
+    <Game name="AMELIA"/>
     <span class="bird"><img alt="little bird" src="./assets/bird.png"></span>
+  
   </div>
 </template>
 

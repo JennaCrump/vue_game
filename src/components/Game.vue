@@ -1,7 +1,14 @@
 <template>
-  <div class="hello">
-    <h1 class="title">{{ msg }}</h1>
-    <ul>
+  <div>
+    <h1 
+      v-if="!hasGameStarted"
+      class="title"
+    >
+      {{ name }}
+    </h1>
+    <ul
+      v-if="!hasGameStarted"
+    >
         <li>
             <button @click="onClickOfGameChoice('letter_game')">
                 <font-awesome-layers class="fa-stack fa-2x" style="color: rgb(223, 94, 154)">
@@ -27,7 +34,11 @@
             </button>
         </li>
     </ul>
-    <LetterGameTemplate v-if="currentSelectedGame === 'letter_game'"/>
+
+    <LetterGameTemplate 
+      v-if="currentSelectedGame === 'letter_game'"
+      @gameStarted="onStartOfGame"
+    />
   </div>
 </template>
 
@@ -37,19 +48,23 @@ import LetterGameTemplate from "./LetterGameTemplate";
 export default {
   name: "Game",
   props: {
-    msg: { type: String }
+    name: { type: String }
   },
   components: {
     LetterGameTemplate
   },
   data() {
     return {
-      currentSelectedGame: null
+      currentSelectedGame: null,
+      hasGameStarted: false
     };
   },
   methods: {
     onClickOfGameChoice(gameType) {
       this.currentSelectedGame = gameType;
+    },
+    onStartOfGame() {
+      this.hasGameStarted = true;
     }
   }
 };
@@ -59,15 +74,7 @@ export default {
 <style scoped>
 ul {
   list-style-type: none;
-  /* display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding-left: 0; */
 }
-/* li {
-  padding-left: 1em;
-  padding-right: 1em;
-} */
 
 button {
   padding: 0;

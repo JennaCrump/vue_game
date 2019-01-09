@@ -1,30 +1,31 @@
 <template>
     <div>
-        <h1>Which is the matching lowercase letter for: </h1>
-        <div class="question">
-          {{ getQuestion }}
-        </div>
+      <h1>
+        Which is the matching lowercase letter for: 
+      </h1>
+      <div 
+        class="question"
+      >
+        {{ getQuestion }}
+      </div>
       <ul>
-        <li v-for="(item, index) in shuffleAnswers" :key="index">
-          <button @click="getResults(item)">
-            {{ item }}
-          </button>
+        <li 
+          v-for="(item, index) in shuffleAnswers" :key="index"
+          >
+            <button 
+              @click="getResults(item)"
+            >
+              {{ item }}
+            </button>
         </li>
       </ul>
-      <button :disabled="disableOnwardButton">
-        Onward!
-      </button>
+      
     </div>
 </template>
 
 <script>
 export default {
   name: "LetterGameQuestion",
-  data() {
-    return {
-      disableOnwardButton: true
-    };
-  },
   computed: {
     getValidAlphaNumber() {
       return this.getRandomNumber(0, 25);
@@ -76,14 +77,41 @@ export default {
       return answerArray;
     },
     getResults(answer) {
-      if (this.getQuestion.toLowerCase() === answer) {
-        // this.disableOnwardButton = false;
-        this.$emit("correctAnswer");
-        console.log("YES");
-      } else {
-        console.log("NO");
-      }
-    }
+      const recordObject = {
+        question: this.getQuestion,
+        selectedAnswer: answer,
+        isCorrect: this.getQuestion.toLowerCase() === answer,
+        answerRecorded: true
+      };
+      this.$emit("record", recordObject);
+    },
+    nextQuestion() {}
   }
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css?family=Patrick+Hand");
+
+.question {
+  text-align: center;
+  color: rgb(76, 30, 80);
+  font-family: "Patrick Hand", cursive;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+}
+
+button {
+  padding: 1em;
+  border: none;
+  background: none;
+  color: rgb(76, 30, 80);
+  font-family: "Patrick Hand", cursive;
+  font-size: 2em;
+}
+</style>
+
